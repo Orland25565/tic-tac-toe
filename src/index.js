@@ -4,9 +4,9 @@ let React = require('react'),
 function Square(props) {
   return (
       <button
-          className='square'
+          className={props.className}
           onClick={() => props.onClick()}>
-        {props.value ? props.value : '-'}
+        {props.value ? props.value : ''}
       </button>
   );
 }
@@ -19,31 +19,51 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
       xIsNext: true,
     };
-  }git
+
+    this.winner = null;
+  }
+
+  git;
 
   handleClick(i) {
     const sq = this.state.squares.slice();
-    if (sq[i]) return;
+    if (sq[i] || this.winner) return;
     sq[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({squares: sq, xIsNext: !this.state.xIsNext});
   }
-git
+
+  git;
+
   renderSquare(i) {
     return (
         <Square
             value={this.state.squares[i]}
             onClick={() => this.handleClick(i)}
+            className={`square${this.state.squares[i] ? '' : ` squareActive`}`}
         />
     );
   }
 
   render() {
-    let winner = calculateWinner(this.state.squares),
-        status = `Next Player: ${this.state.xIsNext ? 'X' : 'O'}`;
-    if (winner) status = `Победил ${winner}`;
+    this.winner = calculateWinner(this.state.squares);
+
+    let currentPlayer = this.state.xIsNext ? 'X' : 'O',
+        status = `Следующий ход: `;
+
+    if (this.winner) {
+      status = `Победитель: `;
+      currentPlayer = this.winner;
+    }
+
     return (
-        <div>
-          <div className='status'>{status}</div>
+        <div id='board'>
+          <div className='statusContainer'>
+            <span className='status'>
+              {status}
+              <span id='currentPlayer'>{currentPlayer}</span>
+            </span>
+            <button id='dischargeButton'>↻</button>
+          </div>
           <div className='board-row'>
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -67,7 +87,7 @@ git
 class Game extends React.Component {
   render() {
     return (
-        <div>
+        <div id='game'>
           <Board/>
         </div>
     );
