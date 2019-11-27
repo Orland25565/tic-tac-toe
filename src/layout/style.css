@@ -1,0 +1,263 @@
+.game .board .board-row button, .game .board .gameToolbar .controlPanel .dischargeButton {
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 0 0 10px 2px black;
+  float: left;
+  padding: 0;
+  font-weight: bold;
+  font-family: "Comic Sans MS";
+  text-align: center;
+  border-radius: 10px;
+  transition: 200ms;
+  outline: none;
+}
+
+body {
+  background-color: #212121;
+  color: #ffffff;
+  user-select: none;
+}
+
+.game {
+  width: 100vh;
+  height: 100vh;
+}
+@media (max-width: 800px) {
+  .game {
+    width: 580px;
+    height: 580px;
+  }
+}
+.game .board {
+  width: 70%;
+  height: 70%;
+}
+.game .board .gameToolbar {
+  width: 100%;
+  height: 100px;
+  font-family: Impact, Futura, sans-serif;
+}
+.game .board .gameToolbar .controlPanel {
+  height: 50px;
+  border-bottom: 2px solid #ff5845;
+  border-radius: 5px;
+}
+.game .board .gameToolbar .controlPanel .dischargeButton {
+  width: 40px;
+  font-size: 25px;
+  height: 40px;
+  transition: 200ms;
+}
+.game .board .gameToolbar .controlPanel .dischargeButton:hover {
+  background: #ff7174;
+  transition: 200ms;
+}
+.game .board .gameToolbar .statusContainer {
+  font-family: "Droid Sans Mono", serif;
+  font-size: 40px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.game .board .gameToolbar .statusContainer .currentPlayer {
+  color: #41b700;
+  animation-name: playerName;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+@keyframes playerName {
+  50% {
+    color: #5aff00;
+  }
+  100% {
+    color: #41b700;
+  }
+}
+.game .board .board-row {
+  width: 100%;
+  height: 32.3333333333%;
+}
+.game .board .board-row button {
+  margin: 0.5%;
+  width: 32.3333333333%;
+  height: 100%;
+  font-size: 10vmin;
+}
+.game .board .board-row .squareUnopened {
+  background: #cccccc;
+}
+.game .board .board-row .squareUnopened:hover {
+  background-color: #ff7174;
+  cursor: pointer;
+}
+.game .board .board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.textRotation {
+  animation-name: symbolRotation;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes symbolRotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*
+body {
+  font: 5vw $gothic-font;
+  color: #9a0000;
+  margin: 20px;
+  background-color: $defBgColor;
+  display: grid;
+  grid-template-areas: 'game';
+
+}
+
+#board {
+  grid-area: board;
+}
+
+#game {
+  grid-area: game;
+  width: 95vw;
+  height: 95vh;
+}
+
+
+@keyframes playerName {
+  50% {
+    color: #5aff00;
+  }
+  100% {
+    color: #327900;
+  }
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.statusContainer {
+  font-family: Arial;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-areas: 'status button';
+  grid-template-columns: 600px 100px;
+  grid-template-rows: 10vh;
+}
+
+.status {
+  grid-area: status;
+}
+
+#currentPlayer {
+  color: #327900;
+  animation-name: playerName;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+#dischargeButton {
+  font-size: 6vmin;
+  border-radius: 50%;
+  outline: none;
+  border: 2px solid black;
+  box-shadow: 0 0 5px 2px;
+  grid-area: button;
+  width: 8vmin;
+  height: 8vmin;
+  transition: 300ms;
+}
+
+#dischargeButton:active {
+  width: 7vmin;
+  height: 7vmin;
+  font-size: 5vmin;
+}
+
+.squareUnopened {
+  background: #fff;
+  border: 2px solid #000000;
+  box-shadow: 0 0 10px 2px black;
+  float: left;
+  font-size: 200%;
+  font-weight: bold;
+  line-height: 34px;
+  height: 25vmin;
+  margin: 5px;
+  padding: 0;
+  font-family: "Comic Sans MS";
+  text-align: center;
+  width: 25vmin;
+  border-radius: 10px;
+  transition: 200ms;
+  outline: none;
+}
+
+.squareActive {
+  background-color: #999999;
+  transition: 200ms;
+}
+
+.redHover:hover {
+  outline: none;
+  background-color: #d52a29;
+  transition: 300ms;
+}
+
+.kbd-navigation .squareUnopened:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+@media (max-height: 500px) {
+  #dischargeButton {
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+  }
+
+  #dischargeButton:active {
+    width: 38px;
+    height: 38px;
+    font-size: 28px;
+  }
+
+  .squareUnopened {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  .status {
+    font-size: 30px;
+  }
+
+  .statusContainer {
+    grid-template-columns: 200px;
+  }
+}
+
+ */
+
+/*# sourceMappingURL=style.css.map */
