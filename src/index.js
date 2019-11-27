@@ -1,5 +1,9 @@
+import 'layout/style.scss';
+
 let React = require('react'),
     ReactDOM = require('react-dom');
+
+
 
 function Square(props) {
   return (
@@ -20,6 +24,8 @@ class Board extends React.Component {
       xIsNext: true,
     };
 
+    this.emptyState = Object.assign({}, this.state);
+
     this.winner = null;
   }
 
@@ -39,7 +45,9 @@ class Board extends React.Component {
         <Square
             value={this.state.squares[i]}
             onClick={() => this.handleClick(i)}
-            className={`square${this.state.squares[i] ? '' : ` squareActive`}`}
+            className={`${this.winner ?
+                '' :
+                this.state.squares[i] ? '' : 'squareUnopened'}`}
         />
     );
   }
@@ -51,18 +59,25 @@ class Board extends React.Component {
         status = `Следующий ход: `;
 
     if (this.winner) {
-      status = `Победитель: `;
-      currentPlayer = this.winner;
+      status = `Результат: `;
+      currentPlayer = this.winner === 'X' ?
+          'победил X' :
+          this.winner === '0' ? 'Победил О' : 'ничья';
     }
 
     return (
-        <div id='board'>
-          <div className='statusContainer'>
-            <span className='status'>
-              {status}
-              <span id='currentPlayer'>{currentPlayer}</span>
-            </span>
-            <button id='dischargeButton'>↻</button>
+        <div className='board'>
+          <div className='gameToolbar'>
+            <div className='controlPanel'>
+              <button onClick={() => this.setState(this.emptyState)}
+                      className='dischargeButton'>
+                <div className='val'>↻</div>
+              </button>
+            </div>
+            <div className='statusContainer'>
+              <span className={status}>{status}</span>
+              <span className='currentPlayer'>{currentPlayer}</span>
+            </div>
           </div>
           <div className='board-row'>
             {this.renderSquare(0)}
@@ -87,7 +102,7 @@ class Board extends React.Component {
 class Game extends React.Component {
   render() {
     return (
-        <div id='game'>
+        <div className='game'>
           <Board/>
         </div>
     );
@@ -106,6 +121,12 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
+  let markedCount = 1;
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i]) markedCount++;
+  }
+  if (markedCount === squares.length) return '=';
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
