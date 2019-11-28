@@ -1,0 +1,12 @@
+.textRotation {
+  animation-name: symbolRotation;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes symbolRotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}

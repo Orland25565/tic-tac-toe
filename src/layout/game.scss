@@ -1,0 +1,144 @@
+$primary-font: Impact, Futura, sans-serif;
+$defBgColor: #212121;
+$defFontColor: #ffffff;
+$btnHoverColor: #ff7174;
+
+%gameBtns {
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 0 0 10px 2px black;
+  float: left;
+  padding: 0;
+  font-weight: bold;
+  font-family: "Comic Sans MS";
+  text-align: center;
+  border-radius: 10px;
+  transition: 200ms;
+  outline: none;
+}
+
+
+body {
+  background-color: $defBgColor;
+  color: $defFontColor;
+  user-select: none;
+}
+
+.game {
+  $mediaSize: 600px;
+
+  width: 100vh;
+  height: 100vh;
+
+  @media (max-width: $mediaSize) {
+    & {
+      width: 580px;
+      height: 580px;
+    }
+  }
+
+  @media (max-height: $mediaSize) {
+   & {
+     width: 580px;
+     height: 580px;
+   }
+}
+
+
+  .board {
+    width: 70%;
+    height: 70%;
+
+    .gameToolbar {
+      $tbHeight: 100px;
+      $tbHeightHalf: $tbHeight / 2;
+
+      width: 100%;
+      height: $tbHeight;
+      font-family: $primary-font;
+
+      .controlPanel {
+        height: $tbHeightHalf;
+        border-bottom: 2px solid #ff5845;
+        border-radius: 5px;
+
+        .dischargeButton {
+          @extend %gameBtns;
+          width: 40px;
+          font-size: $tbHeightHalf - 30px;
+          height: $tbHeightHalf - 10px;
+          transition: 200ms;
+
+          &:hover {
+            background: $btnHoverColor;
+            transition: 200ms;
+          }
+
+          &:active {
+            width: 35px;
+            height: $tbHeightHalf - 15px;
+            font-size: $tbHeightHalf - 35px;
+          }
+        }
+      }
+
+      .statusContainer {
+        font-family: "Droid Sans Mono", serif;
+        font-size: $tbHeightHalf - 10px;
+        height: $tbHeightHalf;
+        margin-bottom: 10px;
+
+        .status {
+
+        }
+
+        .currentPlayer {
+          color: #41b700;
+          animation-name: playerName;
+          animation-duration: 3s;
+          animation-iteration-count: infinite;
+        }
+
+        @keyframes playerName {
+          50% {
+            color: #5aff00;
+          }
+          100% {
+            color: #41b700;
+          }
+        }
+      }
+    }
+
+    .board-row {
+      $btn-margin: 0.5%;
+      width: 100%;
+      height: (100% / 3) - ($btn-margin * 2);
+
+      button {
+        @extend %gameBtns;
+        margin: $btn-margin;
+        width: (100% / 3) - ($btn-margin * 2);
+        height: 100%;
+        font-size: 80px;
+      }
+
+      .squareUnopened {
+        background: #cccccc;
+
+        &:hover {
+          background-color: $btnHoverColor;
+          cursor: pointer;
+        }
+
+      }
+
+      &:after {
+        clear: both;
+        content: "";
+        display: table;
+      }
+    }
+  }
+
+}

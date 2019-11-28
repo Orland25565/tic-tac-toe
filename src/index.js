@@ -1,9 +1,9 @@
-import 'layout/style.scss';
+import './index.scss';
+import {setTempCls} from './utils/assist/';
 
 let React = require('react'),
-    ReactDOM = require('react-dom');
-
-
+    ReactDOM = require('react-dom'),
+    ReactTestUtils = require('react-dom/test-utils');
 
 function Square(props) {
   return (
@@ -62,16 +62,19 @@ class Board extends React.Component {
       status = `Результат: `;
       currentPlayer = this.winner === 'X' ?
           'победил X' :
-          this.winner === '0' ? 'Победил О' : 'ничья';
+          this.winner === 'O' ? 'Победил О' : 'ничья';
     }
 
     return (
         <div className='board'>
           <div className='gameToolbar'>
             <div className='controlPanel'>
-              <button onClick={() => this.setState(this.emptyState)}
-                      className='dischargeButton'>
-                <div className='val'>↻</div>
+              <button onClick={(e) => {
+                this.setState(this.emptyState);
+                setTempCls(e.currentTarget.children[0],
+                    'textRotation')
+              }} className='dischargeButton'>
+                {this.resetBtn = <div className='updateSymbol'>↻</div>}
               </button>
             </div>
             <div className='statusContainer'>
@@ -121,11 +124,7 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  let markedCount = 1;
-  for (let i = 0; i < squares.length; i++) {
-    if (squares[i]) markedCount++;
-  }
-  if (markedCount === squares.length) return '=';
+
 
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -133,7 +132,15 @@ function calculateWinner(squares) {
       return squares[a];
     }
   }
+
+  let markedCount = 0;
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i]) markedCount++;
+  }
+  if (markedCount === squares.length) return '=';
+
   return null;
+
 }
 
 ReactDOM.render(
